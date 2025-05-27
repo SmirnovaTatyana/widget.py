@@ -1,4 +1,6 @@
-from src.masks import get_mask_card_number, get_mask_account
+import re
+from typing import Union
+
 
 def mask_account_card(account_card_number: str) -> str:
     """
@@ -21,6 +23,7 @@ def mask_account_card(account_card_number: str) -> str:
     else:
         masked_number = f"{number[:4]} {number[4:6]}** **** {number[12:]}"
         return f"{account_type} {masked_number}"
+
 
 def get_date(date_string: str) -> str:
     """
