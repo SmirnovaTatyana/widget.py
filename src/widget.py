@@ -1,5 +1,6 @@
 import re
 from typing import Union
+from masks import get_mask_card_number, get_mask_account
 
 
 def mask_account_card(account_card_number: str) -> str:
@@ -18,10 +19,10 @@ def mask_account_card(account_card_number: str) -> str:
     account_type = parts[0]
     number = parts[1] if len(parts) > 1 else ""  # Обработка случая, когда нет номера после типа
     if "Счет" in account_type:
-        masked_number = "" + number[-4:]
+        masked_number = get_mask_account(number)
         return f"{account_type} {masked_number}"
     else:
-        masked_number = f"{number[:4]} {number[4:6]}** **** {number[12:]}"
+        masked_number = get_mask_card_number(number)
         return f"{account_type} {masked_number}"
 
 
