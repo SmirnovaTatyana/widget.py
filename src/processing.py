@@ -1,6 +1,7 @@
-# src/processing.py
+from typing import List, Dict, Any
 
-def filter_by_state(data, state):
+
+def filter_by[str, Any] (state: str) -> List[Dict[str, Any]]:
     """
     Фильтрует данные по заданному состоянию.
 
@@ -12,7 +13,7 @@ def filter_by_state(data, state):
     return [item for item in data if item.get("state") == state]
 
 
-def sort_by_date(data, date_field):
+def sort_by[str, Any] (date_field: str) -> List[Dict[str, Any]]:
     """
     Сортирует данные по полю даты.
 
