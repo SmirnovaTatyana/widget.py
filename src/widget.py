@@ -1,29 +1,42 @@
 import re
 from typing import Union
-from masks import get_mask_card_number, get_mask_account
+from .masks import get_mask_card_number, get_mask_account
 
 
-def mask_account_card(account_card_number: str) -> str:
-    """
-    Маскирует номер банковской карты или счета.
+def mask_account_card(account_card_number):
+    """Маскирует номер карты или счета, оставляя видимыми только первые и последние несколько цифр.
 
     Args:
-        account_card_number: Строка, содержащая тип и номер карты или счета.
-                             Например: "Visa Platinum 7000792289606361" или "Счет 73654108430135874305"
+        account_card_number (str): Номер карты или счета.
 
     Returns:
-        Строка с замаскированным номером карты или счета.
-        Пример: "Visa Platinum 7000 79** **** 6361" или "Счет **4305"
+        str: Маскированный номер карты или счета.
+             Если входные данные некорректны, возвращает сообщение об ошибке.
     """
     parts = account_card_number.split()
+    if not parts:
+        return " Некорректный номер карты"
+
     account_type = parts[0]
-    number = parts[1] if len(parts) > 1 else ""  # Обработка случая, когда нет номера после типа
-    if "Счет" in account_type:
-        masked_number = get_mask_account(number)
-        return f"{account_type} {masked_number}"
+    if len(parts) > 1:
+        number = parts[-1]
     else:
-        masked_number = get_mask_card_number(number)
+        number = ""
+
+    if account_type in ["Visa Platinum", "MasterCard", "Maestro"]:
+        if not number.isdigit() or len(number) < 13:
+            return f"{account_type} Некорректный номер карты"
+        number = ''.join(filter(str.isdigit, number))  # Убираем все нецифровые символы
+        masked_number = f"{number[:4]} {number[4:6]}** **** {number[-4:]}"
         return f"{account_type} {masked_number}"
+
+    elif account_type == "Счет":
+        if not number.isdigit() or len(number) < 5:
+            return f"{account_type} Некорректный номер счета"
+        return f"{account_type} **{number[-4:]}"
+
+    else:
+        return f"{account_type} Некорректный номер карты"
 
 
 def get_date(date_string: str) -> str:
