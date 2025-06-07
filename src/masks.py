@@ -1,3 +1,6 @@
+# src/masks.py
+
+
 def get_mask_card_number(card_number: str) -> str:
     """
         Маскирует номер банковской карты.Args:
