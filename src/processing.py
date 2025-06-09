@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 
 def filter_by(data: List[Dict[str, Any]], state: str) -> List[Dict[str, Any]]:

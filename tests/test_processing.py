@@ -1,6 +1,7 @@
 # tests/test_processing.py
 
 import pytest
+
 from src.processing import filter_by, sort_by
 
 
@@ -36,6 +37,7 @@ from src.processing import filter_by, sort_by
         ),
         # Пустой список данных
         ([], 'EXECUTED', []),
+
         # Нет совпадений по состоянию
         (
             [
