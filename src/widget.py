@@ -1,43 +1,54 @@
-import re
-from typing import Union
+# src/widget.py
+from .masks import (get_mask_account,  # Импортируем функции маскировки
+                    get_mask_card_number)
 
 
-def mask_account_card(account_card_number: str) -> str:
+def mask_account_card(account_string: str) -> str:
     """
-    Маскирует номер банковской карты или счета.
+    Маскирует номер карты или счета в строке.
 
     Args:
-        account_card_number: Строка, содержащая тип и номер карты или счета.
-                             Например: "Visa Platinum 7000792289606361" или "Счет 73654108430135874305"
+        account_string (str): Строка, содержащая тип и номер карты или счета.
+                              Пример: "Visa Platinum 7000792289606361" или "Счет 73654108430135874305".
 
     Returns:
-        Строка с замаскированным номером карты или счета.
-        Пример: "Visa Platinum 7000 79** **** 6361" или "Счет **4305"
+        str: Строка с замаскированным номером карты или счета.
     """
-    parts = account_card_number.split()
-    account_type = parts[0]
-    number = parts[1] if len(parts) > 1 else ""  # Обработка случая, когда нет номера после типа
-    if "Счет" in account_type:
-        masked_number = "" + number[-4:]
-        return f"{account_type} {masked_number}"
+    # Проверяем, что входные данные являются строкой
+    if not isinstance(account_string, str):
+        return "Некорректный формат входных данных"
+
+    # Разделяем строку на название и номер
+    parts = account_string.rsplit(" ", 1)  # Разделяем по последнему пробелу
+    if len(parts) != 2:
+        return "Некорректный формат входных данных"
+
+    name, number = parts[0], parts[1]
+
+    # Определяем, является ли строка информацией о счете
+    if name == "Счет":
+        masked_number = get_mask_account(number)  # Используем функцию маскировки счета
     else:
-        masked_number = f"{number[:4]} {number[4:6]}** **** {number[12:]}"
-        return f"{account_type} {masked_number}"
+        masked_number = get_mask_card_number(number)  # Используем функцию маскировки карты
+
+    # Возвращаем результат в виде строки
+    return f"{name} {masked_number}"
 
 
 def get_date(date_string: str) -> str:
     """
-    Преобразует строку с датой из формата "ГГГГ-ММ-ДДTЧЧ:ММ:СС.мс" в формат "ДД.ММ.ГГГГ".
+    Преобразует дату из формата "2024-03-11T02:26:18.671407" в формат "ДД.ММ.ГГГГ".
 
     Args:
-        date_string: Строка с датой в формате "2024-03-11T02:26:18.671407"
+        date_string (str): Строка с датой в формате "2024-03-11T02:26:18.671407".
 
     Returns:
-        Строка с датой в формате "ДД.ММ.ГГГГ" (например, "11.03.2024")
+        str: Строка с датой в формате "ДД.ММ.ГГГГ".
     """
-    match = re.match(r"(\d{4})-(\d{2})-(\d{2})T", date_string)
-    if match:
-        year, month, day = match.groups()
+    try:
+        # Извлекаем дату до символа 'T'
+        date_part = date_string.split("T")[0]
+        year, month, day = date_part.split("-")
         return f"{day}.{month}.{year}"
-    else:
-        return "Invalid date format"  # Или выбросить исключение, если это более уместно
+    except Exception:
+        return "Некорректный формат даты"
