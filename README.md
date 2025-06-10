@@ -37,3 +37,21 @@
 
 - **`card_number_generator(start, stop)`**
   Генерирует номера банковских карт в формате `XXXX XXXX XXXX XXXX`.
+## Декоратор `log`
+
+Декоратор `log` автоматически регистрирует детали выполнения функций:
+- Время вызова.
+- Имя функции.
+- Передаваемые аргументы.
+- Результат выполнения или сообщение об ошибке.
+
+### Пример использования
+from decorators import log
+
+
+@log(filename="mylog.txt")
+def my_function(x, y):
+    return x + y
+
+
+my_function(1, 2)
