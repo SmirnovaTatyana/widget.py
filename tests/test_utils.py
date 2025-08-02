@@ -1,7 +1,7 @@
-import unittest
 import json
 import os
-from unittest.mock import patch, mock_open
+import unittest
+from unittest.mock import mock_open, patch
 
 # Импортируем функцию, которую будем тестировать
 from src.utils import read_json_file

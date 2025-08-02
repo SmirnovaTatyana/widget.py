@@ -1,6 +1,6 @@
 # src/widget.py
-from .masks import (get_mask_account,  # Импортируем функции маскировки
-                    get_mask_card_number)
+from .masks import get_mask_account  # Импортируем функции маскировки
+from .masks import get_mask_card_number
 
 
 def mask_account_card(account_string: str) -> str:

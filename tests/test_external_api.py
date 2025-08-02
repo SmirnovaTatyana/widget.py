@@ -1,7 +1,9 @@
-import unittest
-from unittest.mock import patch, MagicMock
-import requests
 import os
+import unittest
+from unittest.mock import MagicMock, patch
+
+import requests
+
 import src.external_api  # Убедитесь, что это правильный путь к вашему файлу
 
 

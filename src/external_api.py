@@ -1,16 +1,20 @@
+import logging
 import os
+
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()  # Загрузка переменных окружения из .env
+load_dotenv()  # Загружает переменные окружения из .env
 
-API_KEY = os.getenv("EXCHANGE_RATES_API_KEY")
+API_KEY = os.environ.get("EXCHANGE_RATES_API_KEY")
 BASE_URL = "https://api.apilayer.com/exchangerates_data"
 
 
 def get_exchange_rate(currency: str) -> float:
     """
-    Получает текущий курс валюты из API.
+    Получает текущий курс валюты из API.   import os
+   from dotenv import load_dotenv
+
     Args:
     currency (str): Валюта для конвертации (USD или EUR).
 
