@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 
 def filter_by(data: List[Dict[str, Any]], state: str) -> List[Dict[str, Any]]:
@@ -13,7 +13,7 @@ def filter_by(data: List[Dict[str, Any]], state: str) -> List[Dict[str, Any]]:
     return [item for item in data if item.get("state") == state]
 
 
-def sort_by(data: List[Dict [str, Any]], date_field: str) -> List[Dict[str, Any]]:
+def sort_by(data: List[Dict[str, Any]], date_field: str) -> List[Dict[str, Any]]:
     """
     Сортирует данные по полю даты.
 

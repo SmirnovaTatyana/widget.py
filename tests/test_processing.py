@@ -1,7 +1,8 @@
 # tests/test_processing.py
 
 import pytest
-from src.processing import filter_by_state, sort_by_date
+
+from src.processing import filter_by, sort_by
 
 
 @pytest.mark.parametrize(
@@ -36,6 +37,7 @@ from src.processing import filter_by_state, sort_by_date
         ),
         # Пустой список данных
         ([], 'EXECUTED', []),
+
         # Нет совпадений по состоянию
         (
             [
@@ -47,9 +49,9 @@ from src.processing import filter_by_state, sort_by_date
         )
     ]
 )
-def test_filter_by_state(data, state, expected):
-    """Тестирование функции filter_by_state."""
-    assert filter_by_state(data, state) == expected
+def test_filter_by(data, state, expected):
+    """Тестирование функции filter_by."""
+    assert filter_by(data, state) == expected
 
 
 @pytest.mark.parametrize(
@@ -97,5 +99,5 @@ def test_filter_by_state(data, state, expected):
         )
     ]
 )
-def test_sort_by_date(data, reverse, expected):
-    """Тестирование функции sort_by_date."""
+def test_sort_by(data, reverse, expected):
+    """Тестирование функции sort_by."""
